@@ -1,0 +1,19 @@
+docker --version
+
+#https://hub.docker.com/_/microsoft-mssql-server
+docker pull mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04
+
+docker image ls
+
+docker run --rm --name mssql2019 -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=P@ssw0rd' -p 1433:1433 -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server
+
+docker exec -it mssql2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd
+
+create datebase demo
+use demo
+create table customer (id int,name nvarchar(50));
+ insert into customer values (1,'pongchai')
+ select * from customer
+ exit
+
+C:\Users\iamoj\restore>docker cp QREW_BAYQRWWUDB01_20220428.bak 9d839828aab7:/tmp
