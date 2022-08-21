@@ -1,11 +1,12 @@
 docker --version
 
-#https://hub.docker.com/_/microsoft-mssql-server
-docker pull mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04
+#https://hub.docker.com/_/microsoft-azure-sql-edge
+docker pull mcr.microsoft.com/azure-sql-edge
 
 docker image ls
 
-docker run --rm --name mssql2019 -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=P@ssw0rd' -p 1433:1433 -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server
+docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=P@ssw0rd' -e 'MSSQL_PID=Premium' -p 1433:1433 --name azuresqledge -d mcr.microsoft.com/azure-sql-edge
+
 
 docker exec -it mssql2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd
 
